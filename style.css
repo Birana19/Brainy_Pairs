@@ -1,9 +1,17 @@
 *{
     padding: 0;
     margin: 0;
+    margin-top: 15px;
+    background: #111111;
     box-sizing: border-box;
 }
 
+h1{
+    color: white;
+    font-size: 36px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
 .memory-game{
     width: 640px;
     height: 640px;
@@ -14,8 +22,8 @@
 }
 
 .memory-card{
-    width: calc(25%-10px);
-    height:calc(33.333%-10px);
+    width: calc(25% - 10px);
+    height: calc(33.333% - 10px);
     margin:5px;
     position:relative;
     box-shadow:1px 1px 1px rgba(0,0,0,.3);
@@ -40,7 +48,7 @@
     padding: 20px;
     position: absolute;
     border-radius: 5px;
-    background: #1c7ccc;
+    background: #AA336A;
     backface-visibility: hidden;
 }
 

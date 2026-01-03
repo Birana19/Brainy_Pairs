@@ -6,12 +6,30 @@
     box-sizing: border-box;
 }
 
-h1{
-    color: white;
-    font-size: 36px;
-    font-family: Arial, sans-serif;
-    text-align: center;
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
 }
+
+.brain-icon {
+    width: 70px;
+    height: auto;
+}
+
+.game-title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 64px;
+    color:#fe99a0;
+    letter-spacing: 3px;
+    text-shadow: 
+        3px 3px 0 #000,
+        6px 6px 0 rgba(0,0,0,0.2);
+}
+
 .memory-game{
     width: 640px;
     height: 640px;
@@ -48,7 +66,7 @@ h1{
     padding: 20px;
     position: absolute;
     border-radius: 5px;
-    background: #AA336A;
+    background: #fe99a0;
     backface-visibility: hidden;
 }
 

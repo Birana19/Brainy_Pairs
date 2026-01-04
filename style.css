@@ -2,10 +2,13 @@
     padding: 0;
     margin: 0;
     margin-top: 15px;
-    background: #111111;
     box-sizing: border-box;
 }
 
+body {
+    background: #111111;
+    margin-top: 15px;
+}
 
 .title-container {
     display: flex;
@@ -74,3 +77,60 @@
     transform: rotateY(180deg);
 }
 
+.game-controls {
+    color: #fff;
+    width: 640px;
+    margin: 10px auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Baloo 2', cursive;
+}
+
+.stats span{
+    margin-right: 15px;
+}
+
+.actions select,
+.actions button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fe99a0;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.playAgain {
+    background: #111;
+    color: #fe99a0;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 18px;
+
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 2px solid #fe99a0;
+
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #000;
+}
+
+.playAgain:hover {
+    background: #fe99a0;
+    color: #111;
+}

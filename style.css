@@ -42,16 +42,47 @@ body {
     perspective: 1000px;
 }
 
-.memory-card{
-    width: calc(25% - 10px);
-    height: calc(33.333% - 10px);
-    margin:5px;
-    position:relative;
-    box-shadow:1px 1px 1px rgba(0,0,0,.3);
+.memory-card {
+    margin: 5px;
+    position: relative;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
     transform: scale(1);
     transform-style: preserve-3d;
     transition: transform .5s;
+    width: calc(25% - 10px);
+    height: calc(25% - 10px);
 }
+
+.memory-game.easy {
+    width: 480px;
+    height: 320px;
+}
+
+.memory-game.easy .memory-card {
+    width: calc(33.333% - 10px); 
+    height: calc(50% - 10px);    
+}
+
+.memory-game.medium {
+    width: 640px;
+    height: 480px;
+}
+
+.memory-game.medium .memory-card {
+    width: calc(25% - 10px);      
+    height: calc(33.333% - 10px); 
+}
+
+.memory-game.hard {
+    width: 640px;
+    height: 640px;
+}
+
+.memory-game.hard .memory-card {
+    width: calc(25% - 10px);      
+    height: calc(25% - 10px);     
+}
+
 
 .memory-card:active{
     transform: scale(0.97);

@@ -1,4 +1,9 @@
 const cards = document.querySelectorAll('.memory-card');
+const movesEl = document.getElementById('moves');
+const scoreEl = document.getElementById('score');
+const timerEl = document.getElementById('timer');
+const difficultySelect = document.getElementById('difficulty');
+const gameBoard = document.querySelector('.memory-game');
 
 let hasFlippedCard = false;
 let lockBoard = false;
@@ -8,12 +13,13 @@ let moves = 0;
 let score = 0;
 let matchedPairs = 0;
 let timer = 0;
-let timerInterval;
+let timerInterval = null;
 
-const movesEl = document.getElementById('moves');
-const scoreEl = document.getElementById('score');
-const timerEl = document.getElementById('timer');
-
+const difficultyLevels = {
+    easy: 6,
+    medium: 12,
+    hard: 16
+};
 
 function flipCard() {
     if (lockBoard) return;
@@ -41,6 +47,7 @@ function flipCard() {
 function checkForMatch() {
     moves++;
     movesEl.textContent = moves;
+
     const isMatch =
         firstCard.dataset.framework === secondCard.dataset.framework;
 
@@ -55,9 +62,13 @@ function disableCards() {
     score += 100;
     scoreEl.textContent = score;
 
-    if (matchedPairs === cards.length / 2){
+    const visibleCards =
+        document.querySelectorAll('.memory-card[style*="block"]').length;
+
+    if (matchedPairs === visibleCards / 2) {
         endGame();
     }
+
     resetBoard();
 }
 
@@ -68,7 +79,7 @@ function unflipCards() {
         firstCard.classList.remove('flip');
         secondCard.classList.remove('flip');
         resetBoard();
-    }, 1500);
+    }, 1200);
 }
 
 function resetBoard() {
@@ -76,32 +87,24 @@ function resetBoard() {
     [firstCard, secondCard] = [null, null];
 }
 
-// Shuffle cards
-(function shuffle() {
-    cards.forEach(card => {
-        let randomPos = Math.floor(Math.random() * 12);
-        card.style.order = randomPos;
-    });
-})();
-
-cards.forEach(card => card.addEventListener('click', flipCard));
-
-
-function endGame(){
+function endGame() {
     clearInterval(timerInterval);
 
     document.getElementById('finalTime').textContent = timer;
     document.getElementById('finalMoves').textContent = moves;
     document.getElementById('finalScore').textContent = score;
-    
+
     document.getElementById('winModal').style.display = 'flex';
 }
 
 document.getElementById('restart').addEventListener('click', restartGame);
+difficultySelect.addEventListener('change', restartGame);
 
-function restartGame(){
+function restartGame() {
+
     clearInterval(timerInterval);
     timerInterval = null;
+
     timer = 0;
     moves = 0;
     score = 0;
@@ -111,16 +114,29 @@ function restartGame(){
     movesEl.textContent = 0;
     scoreEl.textContent = 0;
 
-    document.getElementById('winModal').style.display ='none';
+    document.getElementById('winModal').style.display = 'none';
+
+    resetBoard();
+
+    gameBoard.classList.remove('easy', 'medium', 'hard');
+    gameBoard.classList.add(difficultySelect.value);
+
+    const level = difficultySelect.value;
+    const cardsToShow = difficultyLevels[level];
 
     cards.forEach(card => {
         card.classList.remove('flip');
+        card.style.display = 'none';
+        card.removeEventListener('click', flipCard);
+    });
+
+    const shuffled = [...cards].sort(() => 0.5 - Math.random());
+
+    shuffled.slice(0, cardsToShow).forEach(card => {
+        card.style.display = 'block';
         card.addEventListener('click', flipCard);
-        card.style.order = Math.floor(Math.random() * cards.length);
     });
 }
 
-
-
-
-
+// Start game initially
+restartGame();

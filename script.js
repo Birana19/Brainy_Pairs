@@ -101,7 +101,6 @@ document.getElementById('restart').addEventListener('click', restartGame);
 difficultySelect.addEventListener('change', restartGame);
 
 function restartGame() {
-
     clearInterval(timerInterval);
     timerInterval = null;
 
@@ -115,28 +114,42 @@ function restartGame() {
     scoreEl.textContent = 0;
 
     document.getElementById('winModal').style.display = 'none';
-
     resetBoard();
 
+    // Set difficulty class
     gameBoard.classList.remove('easy', 'medium', 'hard');
     gameBoard.classList.add(difficultySelect.value);
 
     const level = difficultySelect.value;
-    const cardsToShow = difficultyLevels[level];
+    const pairsNeeded = difficultyLevels[level] / 2;
 
-    cards.forEach(card => {
-        card.classList.remove('flip');
-        card.style.display = 'none';
-        card.removeEventListener('click', flipCard);
+    // Get all unique pairs
+    const allPairs = [];
+    const uniqueFrameworks = [...new Set([...cards].map(c => c.dataset.framework))];
+
+    uniqueFrameworks.forEach(fw => {
+        const pair = [...cards].filter(c => c.dataset.framework === fw);
+        if (pair.length >= 2) allPairs.push(pair);
     });
 
-    const shuffled = [...cards].sort(() => 0.5 - Math.random());
+    // Shuffle pairs and select required number
+    const selectedPairs = allPairs.sort(() => 0.5 - Math.random()).slice(0, pairsNeeded);
 
-    shuffled.slice(0, cardsToShow).forEach(card => {
-        card.style.display = 'block';
+    // Flatten pairs and clone nodes to shuffle freely
+    const cardsToShowArray = selectedPairs.flat().map(card => card.cloneNode(true));
+
+    // Shuffle cards randomly
+    const shuffledCards = cardsToShowArray.sort(() => 0.5 - Math.random());
+
+    // Clear game board and append shuffled cards
+    gameBoard.innerHTML = '';
+    shuffledCards.forEach(card => {
+        card.classList.remove('flip');
         card.addEventListener('click', flipCard);
+        gameBoard.appendChild(card);
     });
 }
+
 
 // Start game initially
 restartGame();
